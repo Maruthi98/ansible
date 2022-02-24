@@ -1,30 +1,28 @@
 ---
-  - name: Installing Java
+  - name: docker
     hosts: 3.109.32.44
-
-           
+          
     become: yes
     tasks:
       - name: updating repos
         yum:
           name: "*"
           state: latest
-      - name: Installing required java
+      - name: Installing required docker
         yum:
-          name: java-1.8.0-openjdk
+          name: docker
           state: present
-      - name: Downloading tomcat
+      - name: Downloading docker
         get_url:
-          url: "https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.75/bin/apache-tomcat-8.5.75.tar.gz"
-          dest: /usr/local
-      - name: Extracting tomcat
-        unarchive:
-          src: "/usr/local/apache-tomcat-8.5.75.tar.gz"
-          dest: /usr/local
-          remote_src: yes
-      - name: Renaming tomcat home
-        command: mv /usr/local/apache-tomcat-8.5.75 /usr/local/tomcat
-      - name: Start tomcat
-        shell: nohup /usr/local/tomcat/bin/startup.sh &
-
-
+          url: "https://download.docker.com/linux/static/stable/aarch64/docker-20.10.9.tgz"
+          dest: /usr/bin/
+     
+      - name: " Installing Docker latest version"
+        yum:
+          name: docker
+          state: present
+      - name: " Starting and Enabling Docker service"
+        service:
+            name: docker
+            state: started
+            enabled: yes
