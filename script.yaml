@@ -1,6 +1,7 @@
 ---
   - name: Installing Java
-    hosts: 13.232.120.211
+    hosts: 3.109.32.44
+
            
     become: yes
     tasks:
